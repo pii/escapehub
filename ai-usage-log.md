@@ -40,6 +40,19 @@
 | Επαλήθευση | <!-- πώς ελέγχθηκε το αποτέλεσμα --> |
 | Σύνδεσμοι | [#4](https://github.com/pii/escapehub/issues/4) |
 
+### AI-00-02: PR template, issue template, Definition of Done, CONTRIBUTING
+
+| Πεδίο | Περιεχόμενο |
+|-------|-------------|
+| Ημερομηνία | 2026-11-19 |
+| Μέλος | Kostas1102 |
+| Εργαλείο | ChatGPT|
+| Σκοπός | Πρόχειρη σύνταξη των κανόνων εργασίας της ομάδας με βάση τις Ενότητες 4.1, 4.2 και 4.4 της εκφώνησης |
+| Τι πρότεινε | `.github/pull_request_template.md` με πεδίο χρήσης AI, `.github/ISSUE_TEMPLATE/user-story.md`, `docs/definition-of-done.md` (κριτήρια της Ενότητας 4.1 και επιπλέον κριτήρια της ομάδας) και `CONTRIBUTING.md` (branches, commits, pull requests, code review, προστασία του `main`, εκδόσεις). |
+| Απόφαση | Αποδεκτό |
+| Επαλήθευση | Σύγκριση με τις Ενότητες 4.1, 4.2 και 4.4 της εκφώνησης και έλεγχος από την ομάδα στο review του PR. |
+| Σύνδεσμοι | [#6](https://github.com/pii/escapehub/issues/6)
+
 ### Λανθασμένες ή ελλιπείς προτάσεις στο Sprint 0
 
 ## Sprint 1
