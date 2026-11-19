@@ -31,7 +31,22 @@
 |----------|-----------|
 | `GET /api/hello?name=...` | Δοκιμαστικό endpoint του skeleton |
 | `GET /actuator/health` | Κατάσταση της εφαρμογής |
-| `GET /actuator/info` | Πληροφορίες έκδοσης. Η έκδοση και το commit θα προστεθούν με το TS-03. |
+| `GET /actuator/info` | Έκδοση (`build.version`) και commit (`git.commit.id`) της εφαρμογής |
+
+## Εκτέλεση με Docker
+
+Κάθε tag `vX.Y.Z` δημοσιεύει αυτόματα το image `ghcr.io/pii/escapehub:X.Y.Z`. Για να τρέξει μια συγκεκριμένη έκδοση χωρίς build από τον κώδικα:
+
+```bash
+ESCAPEHUB_VERSION=0.1.0 docker compose up
+```
+
+Για build του image από τον τοπικό κώδικα:
+
+```bash
+docker build -t escapehub:local .
+docker run -p 8080:8080 escapehub:local
+```
 
 ## Έλεγχοι
 
