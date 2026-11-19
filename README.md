@@ -44,12 +44,12 @@
 | Έγγραφο | Περιεχόμενο |
 |---------|-------------|
 | [Ομάδα ανάπτυξης](docs/team.md) | Μέλη, ρόλοι, πρόγραμμα εναλλαγής Scrum Master |
-| [Definition of Done](definition-of-done.md) | Πότε θεωρείται ολοκληρωμένη μια story ή ένα sprint |
+| [Definition of Done](docs/definition-of-done.md) | Πότε θεωρείται ολοκληρωμένη μια story ή ένα sprint |
 | [Product backlog](docs/product-backlog.md) | Ιεραρχημένες user stories με εκτιμήσεις |
 | [Αναφορά APIs](docs/api-research.md) | Wikidata και Open Library: δυνατότητες, όρια, μορφή αποκρίσεων |
 | [Αρχιτεκτονική](docs/architecture.md) | Modules, μοντέλο δεδομένων, ροές, έλεγχοι, CI/CD |
 | [ADRs](docs/adr/README.md) | Καταγραφή τεχνικών αποφάσεων |
-| [AI-usage log](ai-usage-log.md) | Χρήση εργαλείων AI ανά sprint |
+| [AI-usage log](docs/ai-usage-log.md) | Χρήση εργαλείων AI ανά sprint |
 | [Sprint 0](docs/sprints/sprint-0.md) | Στόχος, παραδοτέα, review, retrospective |
 | [Οδηγός συνεισφοράς](CONTRIBUTING.md) | Git workflow, pull requests, reviews, εκδόσεις |
 | [Changelog](CHANGELOG.md) | Αλλαγές ανά έκδοση |
