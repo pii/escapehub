@@ -92,6 +92,19 @@
 | Επαλήθευση | Τα παραδοτέα συγκρίθηκαν με την Ενότητα 6.1 της εκφώνησης. Οι καταστάσεις ελέγχθηκαν με τα issues και τα PRs στο GitHub και με τις ρυθμίσεις του αποθετηρίου (μέσω του GitHub API). |
 | Σύνδεσμοι | [#2](https://github.com/pii/escapehub/issues/2) |
 
+### AI-00-06: Έκδοση στο /actuator/info, Docker image, release workflow, Docker Compose
+
+| Πεδίο | Περιεχόμενο |
+|-------|-------------|
+| Ημερομηνία | 2026-11-19 |
+| Μέλος | thanasiosmulonas |
+| Εργαλείο | Claude Sonnet |
+| Σκοπός | Υλοποίηση του S0-11 |
+| Τι πρότεινε | `pom.xml`: goal `build-info` και `git-commit-id-maven-plugin`, ώστε το `/actuator/info` να δείχνει έκδοση και commit. `ActuatorInfoTests` για το `/actuator/info`. `Dockerfile` multi-stage (build με JDK 25, εκτέλεση με JRE 25 χωρίς root) και `.dockerignore`. `compose.yaml` που τρέχει μια έκδοση μόνο από το image. `.github/workflows/release.yml`: σε κάθε tag `vX.Y.Z` ελέγχει ότι η έκδοση του `pom.xml` ταιριάζει με το tag, τρέχει `./mvnw verify`, δημοσιεύει το `ghcr.io/pii/escapehub:X.Y.Z` και δημιουργεί GitHub Release. Ενότητα «Εκτέλεση με Docker» στο README. |
+| Απόφαση | Αποδεκτό |
+| Επαλήθευση | Σε καθαρό clone του `main`: το `./mvnw verify` περνά (5 έλεγχοι, 0 παραβιάσεις Checkstyle, 0 bugs SpotBugs), και το `/actuator/info` του jar έδειξε `build.version` και `git.commit.id`. Τα YAML ελέγχθηκαν συντακτικά. Ο έλεγχος έκδοσης του workflow δοκιμάστηκε τοπικά: δέχεται το tag που ταιριάζει με το `pom.xml` και απορρίπτει το `v0.1.0`. Η δοκιμή έδειξε δύο κενά της αρχικής πρότασης: (α) το `build.time` ήταν πάντα `1980-02-01` λόγω reproducible builds, οπότε απενεργοποιήθηκε, (β) μέσα σε `git worktree` το plugin καταγράφει το commit του κύριου checkout, ενώ σε κανονικό clone το commit είναι σωστό. Το Docker image και το release workflow δεν έχουν δοκιμαστεί ακόμη, γιατί δεν υπήρχε Docker τοπικά. |
+| Σύνδεσμοι | [#13](https://github.com/pii/escapehub/issues/13) |
+
 ### Λανθασμένες ή ελλιπείς προτάσεις στο Sprint 0
 
 ## Sprint 1

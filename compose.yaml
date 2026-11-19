@@ -1,0 +1,8 @@
+# Εκτέλεση μιας δημοσιευμένης έκδοσης χωρίς build από τον κώδικα:
+#   ESCAPEHUB_VERSION=0.1.0 docker compose up
+services:
+  app:
+    image: ghcr.io/pii/escapehub:${ESCAPEHUB_VERSION:-0.1.0}
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
