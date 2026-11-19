@@ -35,7 +35,7 @@
 | ID | Εργασία | Owner | Εκτίμηση | Κατάσταση |
 |----|---------|-------|----------|-----------|
 | S0-01 | Σύνθεση ομάδας, ρόλοι, πρόγραμμα Scrum Master | ΠΑΝΑΓΙΩΤΗΣ ΙΩΑΝΝΙΔΗΣ | – | Κλειστό (#1). Λείπουν οι Scrum Masters για τα Sprints 1–4. |
-| S0-02 | Ρύθμιση GitHub: branch protection, labels, Project board, milestones | ΠΑΝΑΓΙΩΤΗΣ ΙΩΑΝΝΙΔΗΣ | – | Σε εξέλιξη (#2). Εκκρεμεί το Project board. |
+| S0-02 | Ρύθμιση GitHub: branch protection, labels, Project board, milestones | ΠΑΝΑΓΙΩΤΗΣ ΙΩΑΝΝΙΔΗΣ | – | Σε εξέλιξη (#2). Λείπουν οι ημερομηνίες των milestones Sprint 1–4. |
 | S0-03 | PR template, issue template, DoD, CONTRIBUTING (TS-02) | ΚΩΝΣΤΑΝΤΙΝΟΣ ΠΑΠΑΔΟΠΟΥΛΟΣ | 1 SP | Ολοκληρώθηκε (#6) |
 | S0-04 | AI-usage log | ΙΩΑΝΝΗΣ ΠΑΠΑΣΤΕΡΓΙΟΥ | – | Ολοκληρώθηκε (#4) |
 | S0-05 | Ανάλυση απαιτήσεων και product backlog, planning poker | ΙΩΑΝΝΗΣ ΠΑΠΑΣΤΕΡΓΙΟΥ | – | Πρόχειρο |
