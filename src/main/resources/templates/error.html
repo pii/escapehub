@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<!-- Σελίδα σφάλματος για κωδικούς χωρίς δική τους σελίδα στο templates/error/ (π.χ. 400, 403, 409). -->
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Σφάλμα')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main class="container narrow">
+	<h1>Η ενέργεια δεν ολοκληρώθηκε</h1>
+	<p th:text="|Κωδικός σφάλματος: ${status}|">Κωδικός σφάλματος</p>
+	<p><a th:href="@{/}">Επιστροφή στην αρχική</a></p>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -8,10 +8,11 @@ import org.testcontainers.utility.DockerImageName;
 
 /**
  * PostgreSQL σε container για τους ελέγχους, με την ίδια έκδοση όπως στα compose files.
- * Χρησιμοποιείται μέσω του {@link IntegrationTest}.
+ * Χρησιμοποιείται μέσω του {@link IntegrationTest}, ή με {@code @Import} σε ελέγχους που χρειάζονται κάτι άλλο
+ * (π.χ. {@code @DataJpaTest} ή πραγματικό server με {@code RANDOM_PORT}).
  */
 @TestConfiguration(proxyBeanMethods = false)
-class TestcontainersConfiguration {
+public class TestcontainersConfiguration {
 
 	@Bean
 	@ServiceConnection
