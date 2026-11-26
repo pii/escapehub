@@ -26,6 +26,7 @@ class OpenApiTests {
 			.hasPath("$.paths['/api/missions']")
 			.hasPath("$.paths['/api/playthroughs']")
 			.hasPath("$.paths['/api/playthroughs/{id}']")
+			.hasPath("$.paths['/api/playthroughs/{id}/journal']")
 			.doesNotHavePath("$.paths['/teams']")
 			.doesNotHavePath("$.paths['/missions']")
 			.doesNotHavePath("$.paths['/player']");

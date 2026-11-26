@@ -51,6 +51,8 @@ git push -u origin feature/12-team-invite-code
 | `team` | `TeamService` | `teamsOf(PlayerId)`, `isMember(TeamId, PlayerId)`, `isCreator(TeamId, PlayerId)`, `details(TeamId, PlayerId)`, `create(PlayerId, name)` |
 | `mission` | `MissionCatalog` | `all()`, `find(id)`, `get(id)`. Το `Mission` περιέχει και τις σωστές απαντήσεις: δεν τις διαβάζουμε ποτέ σε template ή DTO ([μορφή αρχείου](docs/mission-format.md)). |
 | `game` | `PlaythroughService` | `details(PlayerId, PlaythroughId)`: το playthrough με ομάδα και αποστολή, ή 403 για όσους δεν είναι μέλη. Επίσης `catalog(...)`, `start(...)`, `startSolo(...)`. |
+| `game` | `EvidenceService` | `examine(PlayerId, PlaythroughId, evidenceId)`, `journal(...)`, `examinable(...)`: το ημερολόγιο με έλεγχο μέλους και διαθεσιμότητας (409 για στοιχείο που δεν έχει αποκαλυφθεί). |
+| `journal` | `JournalService` | `record(...)`, `entry(...)`, `entries(...)`. Δεν ελέγχει δικαιώματα: τα άλλα modules περνούν από το `EvidenceService`. |
 
 ### Σελίδες (Thymeleaf)
 

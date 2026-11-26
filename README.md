@@ -49,6 +49,9 @@
 | `GET /api/missions` | Οι αποστολές. Με `?teamId=` και η κατάσταση (`NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`) για την ομάδα. |
 | `POST /api/playthroughs` | Έναρξη αποστολής (JSON `{"missionId": "...", "teamId": 1}` ή `{"missionId": "...", "solo": true}`). 201 για νέο, 200 αν η ομάδα έχει ήδη ενεργό, 403 αν δεν είσαι ο δημιουργός. |
 | `GET /api/playthroughs/{id}` | Ένα playthrough, ή 403 για όσους δεν είναι μέλη της ομάδας |
+| `POST /playthroughs/{id}/journal` | Εξέταση αντικειμένου από τη σελίδα της αποστολής: το στοιχείο μπαίνει στο κοινό ημερολόγιο |
+| `GET /api/playthroughs/{id}/journal` | Το κοινό ημερολόγιο, με τα νεότερα πρώτα (στοιχείο, ποιος το βρήκε, πότε). 403 για όσους δεν είναι μέλη. |
+| `POST /api/playthroughs/{id}/journal` | Προσθήκη στοιχείου (JSON `{"evidenceId": "..."}`). 201 για νέο, 200 αν υπάρχει ήδη, 409 αν δεν έχει αποκαλυφθεί. |
 | `GET /api/hello?name=...` | Δοκιμαστικό endpoint του skeleton |
 | `GET /swagger-ui.html` | Τεκμηρίωση του REST API (Swagger UI) |
 | `GET /v3/api-docs` | Η περιγραφή OpenAPI του `/api/**` σε JSON |

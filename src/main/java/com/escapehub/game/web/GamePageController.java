@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.escapehub.common.ConflictException;
 import com.escapehub.common.ForbiddenException;
 import com.escapehub.common.NotFoundException;
 import com.escapehub.game.PlaythroughId;
+import com.escapehub.game.application.EvidenceService;
+import com.escapehub.game.application.ExamineResult;
 import com.escapehub.game.application.PlaythroughDetails;
 import com.escapehub.game.application.PlaythroughService;
 import com.escapehub.game.application.StartResult;
@@ -25,7 +28,7 @@ import com.escapehub.user.CurrentPlayer;
 import com.escapehub.user.PlayerId;
 
 /**
- * Οι σελίδες «Αποστολές» (κατάλογος) και «Αποστολή σε εξέλιξη» (US-05, US-06).
+ * Οι σελίδες «Αποστολές» (κατάλογος) και «Αποστολή σε εξέλιξη» με το κοινό ημερολόγιο (US-05, US-06, US-07).
  */
 @Controller
 class GamePageController {
@@ -40,13 +43,20 @@ class GamePageController {
 	private static final DateTimeFormatter TIME = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
 		.withZone(ZoneId.of("Europe/Athens"));
 
+	static final String ADDED = "Το στοιχείο προστέθηκε στο ημερολόγιο.";
+
+	static final String ALREADY_IN_JOURNAL = "Το στοιχείο είναι ήδη στο ημερολόγιο.";
+
 	private final PlaythroughService playthroughs;
 
 	private final TeamService teams;
 
-	GamePageController(PlaythroughService playthroughs, TeamService teams) {
+	private final EvidenceService evidence;
+
+	GamePageController(PlaythroughService playthroughs, TeamService teams, EvidenceService evidence) {
 		this.playthroughs = playthroughs;
 		this.teams = teams;
+		this.evidence = evidence;
 	}
 
 	/**
@@ -99,17 +109,43 @@ class GamePageController {
 	}
 
 	/**
-	 * Η αποστολή σε εξέλιξη: τίτλος, ομάδα, χρόνος έναρξης και διαδρομές. Τη βλέπουν μόνο τα μέλη της ομάδας.
+	 * Η αποστολή σε εξέλιξη: τίτλος, ομάδα, χρόνος έναρξης, διαδρομές, αντικείμενα για εξέταση και το κοινό
+	 * ημερολόγιο (US-07, AC5). Τη βλέπουν μόνο τα μέλη της ομάδας. Οι καταχωρίσεις των συμπαικτών φαίνονται με
+	 * ανανέωση της σελίδας.
 	 */
 	@GetMapping("/playthroughs/{id}")
 	String playthrough(@CurrentPlayer PlayerId player, @PathVariable long id, Model model) {
+		PlaythroughId playthroughId = playthroughId(id);
+		PlaythroughDetails playthrough = playthroughs.details(player, playthroughId);
+		model.addAttribute("playthrough", playthrough);
+		model.addAttribute("startedAt", TIME.format(playthrough.startedAt()));
+		model.addAttribute("examinable", evidence.examinable(player, playthroughId));
+		model.addAttribute("journal", evidence.journal(player, playthroughId));
+		model.addAttribute("time", TIME);
+		return "game/playthrough";
+	}
+
+	/**
+	 * Εξέταση αντικειμένου: το στοιχείο μπαίνει στο ημερολόγιο. Αν δεν είναι διαθέσιμο, η σελίδα δείχνει μήνυμα.
+	 */
+	@PostMapping("/playthroughs/{id}/journal")
+	String examine(@CurrentPlayer PlayerId player, @PathVariable long id, @RequestParam String evidenceId,
+			RedirectAttributes redirect) {
+		try {
+			ExamineResult result = evidence.examine(player, playthroughId(id), evidenceId);
+			redirect.addFlashAttribute("message", result.added() ? ADDED : ALREADY_IN_JOURNAL);
+		}
+		catch (ConflictException ex) {
+			redirect.addFlashAttribute("error", ex.getMessage());
+		}
+		return "redirect:/playthroughs/" + id;
+	}
+
+	private static PlaythroughId playthroughId(long id) {
 		if (id <= 0) {
 			throw new NotFoundException("Το παιχνίδι δεν βρέθηκε.");
 		}
-		PlaythroughDetails playthrough = playthroughs.details(player, new PlaythroughId(id));
-		model.addAttribute("playthrough", playthrough);
-		model.addAttribute("startedAt", TIME.format(playthrough.startedAt()));
-		return "game/playthrough";
+		return new PlaythroughId(id);
 	}
 
 	private static String toPlaythrough(StartResult result, RedirectAttributes redirect) {

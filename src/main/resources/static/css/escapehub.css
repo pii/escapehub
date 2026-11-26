@@ -252,3 +252,27 @@ select {
 .facts dd {
 	margin: 0;
 }
+/* Αντικείμενα για εξέταση στη σελίδα της αποστολής (#28) */
+
+.items {
+	padding: 0;
+	list-style: none;
+}
+
+.items li {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.75rem 1rem;
+	margin-bottom: 0.5rem;
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+}
+
+.items li > span:first-child {
+	display: flex;
+	flex-direction: column;
+}

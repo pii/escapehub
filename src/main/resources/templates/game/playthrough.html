@@ -24,6 +24,44 @@
 	<ul class="paths">
 		<li th:each="path : ${playthrough.paths()}" th:text="${path.title()}">Η επιστολή</li>
 	</ul>
+
+	<h2>Αντικείμενα</h2>
+	<p class="hint">Εξέτασε ένα αντικείμενο για να μπει το στοιχείο του στο κοινό ημερολόγιο της ομάδας.</p>
+	<p th:if="${#lists.isEmpty(examinable)}">Δεν υπάρχουν διαθέσιμα αντικείμενα.</p>
+	<ul class="items" th:unless="${#lists.isEmpty(examinable)}">
+		<li th:each="item : ${examinable}">
+			<span>
+				<strong th:text="${item.title()}">Σφραγισμένη επιστολή</strong>
+				<span class="hint" th:text="${item.pathTitle()}">Η επιστολή</span>
+			</span>
+			<span class="hint" th:if="${item.inJournal()}">Στο ημερολόγιο</span>
+			<form method="post" th:action="@{/playthroughs/{id}/journal(id=${playthrough.id().value()})}"
+				  th:unless="${item.inJournal() or playthrough.completedAt() != null}">
+				<input type="hidden" name="evidenceId" th:value="${item.evidenceId()}">
+				<button type="submit">Εξέτασε</button>
+			</form>
+		</li>
+	</ul>
+
+	<h2>Ημερολόγιο</h2>
+	<p class="hint">Τα νεότερα πρώτα. Ανανέωσε τη σελίδα για να δεις τι βρήκαν οι συμπαίκτες σου.</p>
+	<p th:if="${#lists.isEmpty(journal)}">Το ημερολόγιο είναι ακόμη άδειο.</p>
+	<table class="table journal" th:unless="${#lists.isEmpty(journal)}">
+		<thead>
+		<tr>
+			<th>Στοιχείο</th>
+			<th>Το βρήκε</th>
+			<th>Πότε</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="entry : ${journal}">
+			<td th:text="${entry.title()}">Σφραγισμένη επιστολή</td>
+			<td th:text="${entry.addedByName()}">Μαρία</td>
+			<td th:text="${time.format(entry.addedAt())}">26/11/2026 16:05</td>
+		</tr>
+		</tbody>
+	</table>
 </main>
 
 <footer th:replace="~{fragments/layout :: footer}"></footer>

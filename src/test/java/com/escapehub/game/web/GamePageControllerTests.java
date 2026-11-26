@@ -14,9 +14,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
+import com.escapehub.common.ConflictException;
 import com.escapehub.common.ForbiddenException;
 import com.escapehub.game.PlaythroughId;
 import com.escapehub.game.application.CatalogEntry;
+import com.escapehub.game.application.EvidenceService;
+import com.escapehub.game.application.ExaminableEvidence;
+import com.escapehub.game.application.ExamineResult;
+import com.escapehub.game.application.JournalItem;
 import com.escapehub.game.application.PlaythroughDetails;
 import com.escapehub.game.application.PlaythroughService;
 import com.escapehub.game.application.StartResult;
@@ -50,6 +55,54 @@ class GamePageControllerTests {
 
 	@MockitoBean
 	private TeamService teams;
+
+	@MockitoBean
+	private EvidenceService evidence;
+
+	@Test
+	void playthroughPageShowsObjectsToExamineAndJournalNewestFirst() {
+		when(playthroughs.details(MARIA, new PlaythroughId(5))).thenReturn(PLAYTHROUGH);
+		when(evidence.examinable(MARIA, new PlaythroughId(5))).thenReturn(List.of(
+				new ExaminableEvidence("sealed-letter", "Σφραγισμένη επιστολή", "Η επιστολή", true),
+				new ExaminableEvidence("book-spine", "Φθαρμένο βιβλίο", "Το βιβλίο", false)));
+		when(evidence.journal(MARIA, new PlaythroughId(5))).thenReturn(List.of(
+				new JournalItem("portrait-back", "Επιγραφή του πορτρέτου", new PlayerId(2), "Νίκος",
+						Instant.parse("2026-11-26T14:05:00Z")),
+				new JournalItem("sealed-letter", "Σφραγισμένη επιστολή", MARIA, "Μαρία",
+						Instant.parse("2026-11-26T14:01:00Z"))));
+
+		assertThat(get("/playthroughs/5")).hasStatusOk()
+			.bodyText()
+			.contains("Φθαρμένο βιβλίο")
+			.contains("Εξέτασε")
+			.contains("Στο ημερολόγιο")
+			.containsSubsequence("Επιγραφή του πορτρέτου", "Νίκος", "26/11/2026 16:05",
+					"Σφραγισμένη επιστολή", "Μαρία", "26/11/2026 16:01");
+	}
+
+	@Test
+	void examiningObjectRedirectsBackWithMessage() {
+		when(evidence.examine(MARIA, new PlaythroughId(5), "book-spine"))
+			.thenReturn(new ExamineResult(new JournalItem("book-spine", "Φθαρμένο βιβλίο", MARIA, "Μαρία",
+					Instant.parse("2026-11-26T14:01:00Z")), true));
+
+		assertThat(post("/playthroughs/5/journal").param("evidenceId", "book-spine"))
+			.hasStatus(HttpStatus.FOUND)
+			.hasRedirectedUrl("/playthroughs/5")
+			.flash()
+			.containsEntry("message", GamePageController.ADDED);
+	}
+
+	@Test
+	void examiningHiddenEvidenceShowsError() {
+		when(evidence.examine(MARIA, new PlaythroughId(5), "letter-1816"))
+			.thenThrow(new ConflictException("Το στοιχείο δεν έχει αποκαλυφθεί ακόμη."));
+
+		assertThat(post("/playthroughs/5/journal").param("evidenceId", "letter-1816"))
+			.hasRedirectedUrl("/playthroughs/5")
+			.flash()
+			.containsEntry("error", "Το στοιχείο δεν έχει αποκαλυφθεί ακόμη.");
+	}
 
 	@Test
 	void catalogPageShowsMissionsWithStatusForFirstTeam() {
