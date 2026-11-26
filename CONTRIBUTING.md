@@ -49,6 +49,7 @@ git push -u origin feature/12-team-invite-code
 |--------|-------|----------|
 | `user` | `PlayerService` | `findName(PlayerId)` για εμφάνιση ονόματος. Τον τρέχοντα παίκτη τον δίνει το `@CurrentPlayer PlayerId`. |
 | `team` | `TeamService` | `teamsOf(PlayerId)`, `isMember(TeamId, PlayerId)`, `isCreator(TeamId, PlayerId)`, `details(TeamId, PlayerId)`, `create(PlayerId, name)` |
+| `mission` | `MissionCatalog` | `all()`, `find(id)`, `get(id)`. Το `Mission` περιέχει και τις σωστές απαντήσεις: δεν τις διαβάζουμε ποτέ σε template ή DTO ([μορφή αρχείου](docs/mission-format.md)). |
 
 ### Σελίδες (Thymeleaf)
 
