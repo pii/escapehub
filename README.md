@@ -12,18 +12,23 @@
 |---------|---------|
 | Backend | Java 25, Spring Boot 4.1 |
 | Build | Maven (με Maven Wrapper) |
-| Βάση δεδομένων | PostgreSQL|
-| Έλεγχοι | JUnit 5, Mockito, Spring Boot Test, PIT |
+| Βάση δεδομένων | PostgreSQL 18, migrations με Flyway |
+| Έλεγχοι | JUnit 5, Mockito, Spring Boot Test, Testcontainers, PIT |
 | CI/CD | GitHub Actions, Docker, GitHub Container Registry |
 
 ## Εκτέλεση
 
-Απαιτείται **JDK 25**. Το Maven δεν χρειάζεται να είναι εγκατεστημένο, γιατί το project έχει Maven Wrapper.
+Απαιτούνται:
+
+- **JDK 25**. Το Maven δεν χρειάζεται να είναι εγκατεστημένο, γιατί το project έχει Maven Wrapper.
+- **Docker** (π.χ. Docker Desktop), για την PostgreSQL.
 
 ```bash
 ./mvnw spring-boot:run        # Linux / macOS
 .\mvnw.cmd spring-boot:run    # Windows
 ```
+
+Το `spring-boot:run` ξεκινά αυτόματα την PostgreSQL από το `compose.dev.yaml` και τη σταματά όταν σταματήσει η εφαρμογή. Τα δεδομένα μένουν μέχρι να σβηστεί η βάση με `docker compose -f compose.dev.yaml down`. Οι πίνακες δημιουργούνται από τις migrations του Flyway (`src/main/resources/db/migration`).
 
 Η εφαρμογή ξεκινά στο <http://localhost:8080>.
 
@@ -35,17 +40,17 @@
 
 ## Εκτέλεση με Docker
 
-Κάθε tag `vX.Y.Z` δημοσιεύει αυτόματα το image `ghcr.io/pii/escapehub:X.Y.Z`. Για να τρέξει μια συγκεκριμένη έκδοση χωρίς build από τον κώδικα:
+Κάθε tag `vX.Y.Z` δημοσιεύει αυτόματα το image `ghcr.io/pii/escapehub:X.Y.Z`. Για να τρέξει μια συγκεκριμένη έκδοση μαζί με PostgreSQL, χωρίς build από τον κώδικα:
 
 ```bash
 ESCAPEHUB_VERSION=0.1.0 docker compose up
 ```
 
-Για build του image από τον τοπικό κώδικα:
+Για build του image από τον τοπικό κώδικα και εκτέλεση με τη βάση:
 
 ```bash
-docker build -t escapehub:local .
-docker run -p 8080:8080 escapehub:local
+docker build -t ghcr.io/pii/escapehub:local .
+ESCAPEHUB_VERSION=local docker compose up
 ```
 
 ## Έλεγχοι
@@ -53,6 +58,8 @@ docker run -p 8080:8080 escapehub:local
 ```bash
 ./mvnw verify
 ```
+
+Οι έλεγχοι με βάση δεδομένων (`@IntegrationTest`) χρησιμοποιούν PostgreSQL σε container (Testcontainers) και χρειάζονται Docker. Χωρίς Docker παραλείπονται τοπικά και εμφανίζονται ως skipped. Στο CI τρέχουν πάντα.
 
 ## Τεκμηρίωση
 

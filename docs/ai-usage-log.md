@@ -175,4 +175,15 @@
 
 ## Sprint 1
 
-<!-- Καταχωρίσεις AI-01-xx -->
+### AI-01-01: Skeleton του Sprint 1 (modules, PostgreSQL, κοινές συμβάσεις)
+
+| Πεδίο | Περιεχόμενο |
+|-------|-------------|
+| Ημερομηνία | 2026-11-26 |
+| Μέλος | pii |
+| Εργαλείο | Claude Code (Claude Opus 5.5) |
+| Σκοπός | Υλοποίηση του #23: modules, PostgreSQL με Flyway και Testcontainers, κοινές συμβάσεις |
+| Τι πρότεινε | Packages των modules με `package-info.java`. Εξαρτήσεις JPA, Flyway, PostgreSQL, Bean Validation και Testcontainers (όπως τις δίνει το Spring Initializr για το Spring Boot 4.1.2). `compose.dev.yaml` για την τοπική βάση και PostgreSQL στο `compose.yaml`. Πρώτη migration και σύμβαση ονομασίας με timestamp. `GlobalExceptionHandler` με `ProblemDetail`. Το συμβόλαιο `@CurrentPlayer PlayerId` με `CurrentPlayerProvider`. Βοηθητικά ελέγχων `@IntegrationTest` και `TestPlayerConfiguration`. Ενημέρωση του README, του CONTRIBUTING και του `architecture.md`. |
+| Απόφαση | Αποδεκτό |
+| Επαλήθευση | Το `./mvnw verify` περνά τοπικά: 9 έλεγχοι, 0 παραβιάσεις Checkstyle, 0 bugs SpotBugs. Οι 4 έλεγχοι με βάση παραλείπονται τοπικά χωρίς Docker και ελέγχθηκαν στο CI. Η δοκιμή έδειξε δύο λάθη της πρώτης εκδοχής: (α) δύο γραμμές Javadoc ξεπερνούσαν το όριο του Checkstyle, (β) οι controllers που ήταν nested μέσα σε κλάσεις ελέγχου δεν καταχωρίζονταν, γιατί το Spring Boot εξαιρεί τις nested κλάσεις των tests από το scanning, και οι έλεγχοι έπαιρναν 404. Διορθώθηκε με `@Import`. |
+| Σύνδεσμοι | [#23](https://github.com/pii/escapehub/issues/23) |

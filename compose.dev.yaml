@@ -1,0 +1,12 @@
+# PostgreSQL για την τοπική ανάπτυξη.
+# Το ./mvnw spring-boot:run το ξεκινά αυτόματα (spring-boot-docker-compose), δεν χρειάζεται docker compose up.
+# Οι κωδικοί ισχύουν μόνο για την τοπική βάση.
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: escapehub
+      POSTGRES_USER: escapehub
+      POSTGRES_PASSWORD: escapehub
+    ports:
+      - "5432"
