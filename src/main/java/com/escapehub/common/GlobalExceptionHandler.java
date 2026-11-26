@@ -41,6 +41,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return problem(HttpStatus.BAD_REQUEST, "Μη έγκυρα δεδομένα", ex.getMessage());
 	}
 
+	@ExceptionHandler(ForbiddenException.class)
+	ProblemDetail handleForbidden(ForbiddenException ex) {
+		return problem(HttpStatus.FORBIDDEN, "Δεν επιτρέπεται", ex.getMessage());
+	}
+
 	@ExceptionHandler(UnauthenticatedException.class)
 	ProblemDetail handleUnauthenticated(UnauthenticatedException ex) {
 		return problem(HttpStatus.UNAUTHORIZED, "Δεν έχει οριστεί παίκτης", ex.getMessage());

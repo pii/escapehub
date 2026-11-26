@@ -23,7 +23,11 @@ class OpenApiTests {
 			.bodyJson()
 			.hasPath("$.paths['/api/players']")
 			.hasPath("$.paths['/api/teams']")
+			.hasPath("$.paths['/api/missions']")
+			.hasPath("$.paths['/api/playthroughs']")
+			.hasPath("$.paths['/api/playthroughs/{id}']")
 			.doesNotHavePath("$.paths['/teams']")
+			.doesNotHavePath("$.paths['/missions']")
 			.doesNotHavePath("$.paths['/player']");
 		assertThat(mvc.get().uri("/v3/api-docs")).bodyJson()
 			.extractingPath("$.info.title")

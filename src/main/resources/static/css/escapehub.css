@@ -185,3 +185,70 @@ button:hover {
 	text-transform: uppercase;
 	letter-spacing: 0.15em;
 }
+
+/* Κατάλογος αποστολών και αποστολή σε εξέλιξη (#27) */
+
+a.button {
+	display: inline-block;
+	padding: 0.6rem 1rem;
+	font-weight: 600;
+	color: #ffffff;
+	text-align: center;
+	text-decoration: none;
+	background: var(--accent);
+	border-radius: var(--radius);
+}
+
+a.button:hover {
+	background: var(--accent-dark);
+}
+
+button.secondary {
+	color: var(--accent);
+	background: transparent;
+	border: 1px solid var(--accent);
+}
+
+button.secondary:hover {
+	color: #ffffff;
+	background: var(--accent-dark);
+}
+
+.card form button {
+	width: 100%;
+}
+
+select {
+	padding: 0.6rem 0.75rem;
+	font-size: 1rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+}
+
+.team-select {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: center;
+	margin-bottom: 1.5rem;
+}
+
+.status {
+	margin: 0;
+	font-weight: 600;
+}
+
+.facts {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	gap: 0.5rem 1.5rem;
+	margin: 1rem 0 2rem;
+}
+
+.facts dt {
+	color: var(--muted);
+}
+
+.facts dd {
+	margin: 0;
+}

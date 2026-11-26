@@ -25,10 +25,9 @@ import com.escapehub.user.application.RegisteredPlayer;
 class PlayerPageController {
 
 	/**
-	 * Πού πηγαίνει ο παίκτης μετά την εγγραφή. Όταν υπάρξει ο κατάλογος αποστολών (#27), γίνεται
-	 * {@code redirect:/missions}.
+	 * Μετά την εγγραφή ο παίκτης πηγαίνει στον κατάλογο αποστολών (US-01, AC1).
 	 */
-	static final String AFTER_REGISTRATION = "redirect:/";
+	static final String AFTER_REGISTRATION = "redirect:/missions";
 
 	private static final String VIEW = "player/name";
 

@@ -12,6 +12,7 @@
 	<p th:if="${currentPlayerName}">
 		Παίζεις ως <strong th:text="${currentPlayerName}">όνομα παίκτη</strong>.
 	</p>
+	<p><a class="button" th:href="@{/missions}">Δες τις αποστολές</a></p>
 </main>
 
 <footer th:replace="~{fragments/layout :: footer}"></footer>

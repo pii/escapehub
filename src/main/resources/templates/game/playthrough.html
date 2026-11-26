@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${playthrough.missionTitle()})}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main class="container">
+	<p><a th:href="@{/missions(team=${playthrough.team().value()})}">← Αποστολές</a></p>
+	<h1 th:text="${playthrough.missionTitle()}">Τίτλος αποστολής</h1>
+
+	<div th:replace="~{fragments/layout :: messages}"></div>
+
+	<dl class="card facts">
+		<dt>Ομάδα</dt>
+		<dd><a th:href="@{/teams/{id}(id=${playthrough.team().value()})}" th:text="${playthrough.teamName()}">Ομάδα</a></dd>
+		<dt>Έναρξη</dt>
+		<dd th:text="${startedAt}">26/11/2026 16:00</dd>
+		<dt>Κατάσταση</dt>
+		<dd th:text="${playthrough.status().label()}">Σε εξέλιξη</dd>
+	</dl>
+
+	<h2>Διαδρομές</h2>
+	<p class="hint">Οι διαδρομές εξερευνώνται με οποιαδήποτε σειρά.</p>
+	<ul class="paths">
+		<li th:each="path : ${playthrough.paths()}" th:text="${path.title()}">Η επιστολή</li>
+	</ul>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

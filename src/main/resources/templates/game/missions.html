@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Αποστολές')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main class="container">
+	<h1>Αποστολές</h1>
+
+	<div th:replace="~{fragments/layout :: messages}"></div>
+
+	<form class="team-select" method="get" th:action="@{/missions}" th:unless="${#lists.isEmpty(teams)}">
+		<label for="team">Ομάδα</label>
+		<select id="team" name="team">
+			<option th:each="team : ${teams}" th:value="${team.id().value()}" th:text="${team.name()}"
+					th:selected="${selectedTeam != null and team.id().value() == selectedTeam.id().value()}">
+				Ομάδα
+			</option>
+		</select>
+		<button type="submit">Εμφάνιση</button>
+	</form>
+	<p class="hint" th:if="${#lists.isEmpty(teams)}">
+		Δεν ανήκεις ακόμη σε ομάδα. Μπορείς να παίξεις ατομικά ή να <a th:href="@{/teams}">φτιάξεις ομάδα</a>.
+	</p>
+
+	<p th:if="${#lists.isEmpty(missions)}">Δεν υπάρχουν ακόμη αποστολές.</p>
+
+	<div class="cards">
+		<article class="card" th:each="mission : ${missions}">
+			<h2 th:text="${mission.title()}">Τίτλος αποστολής</h2>
+			<p th:text="${mission.summary()}">Σύντομη περιγραφή</p>
+			<p class="hint">
+				<span th:text="|Περίπου ${mission.estimatedMinutes()} λεπτά|">Περίπου 45 λεπτά</span> ·
+				<span th:text="|Τουλάχιστον ${mission.minPlayers()} παίκτες|">Τουλάχιστον 2 παίκτες</span>
+			</p>
+			<p class="status" th:if="${mission.status() != null}"
+			   th:text="|${selectedTeam.name()}: ${mission.status().label()}|">Ομάδα: Σε εξέλιξη</p>
+
+			<a class="button" th:if="${mission.activePlaythrough() != null}"
+			   th:href="@{/playthroughs/{id}(id=${mission.activePlaythrough().value()})}">Συνέχεια</a>
+			<form method="post" th:action="@{/playthroughs}"
+				  th:if="${selectedTeam != null and mission.activePlaythrough() == null}">
+				<input type="hidden" name="teamId" th:value="${selectedTeam.id().value()}">
+				<input type="hidden" name="missionId" th:value="${mission.missionId()}">
+				<button type="submit">Έναρξη</button>
+			</form>
+			<form method="post" th:action="@{/playthroughs/solo}">
+				<input type="hidden" name="missionId" th:value="${mission.missionId()}">
+				<button class="secondary" type="submit">Παίξε ατομικά</button>
+			</form>
+		</article>
+	</div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

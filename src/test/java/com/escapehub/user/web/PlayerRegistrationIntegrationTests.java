@@ -110,7 +110,7 @@ class PlayerRegistrationIntegrationTests {
 	@Test
 	void namePageFlowShowsPlayerInLayout() {
 		MvcTestResult registration = mvc.post().uri("/player").param("name", "Πέτρος").exchange();
-		assertThat(registration).hasStatus(HttpStatus.FOUND).hasRedirectedUrl("/");
+		assertThat(registration).hasStatus(HttpStatus.FOUND).hasRedirectedUrl("/missions");
 		Cookie cookie = registration.getResponse().getCookie(PlayerCookie.NAME);
 		assertThat(cookie).isNotNull();
 

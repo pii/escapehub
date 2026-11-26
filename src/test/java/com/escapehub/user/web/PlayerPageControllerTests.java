@@ -40,7 +40,7 @@ class PlayerPageControllerTests {
 
 		assertThat(mvc.post().uri("/player").param("name", "Μαρία"))
 			.hasStatus(HttpStatus.FOUND)
-			.hasRedirectedUrl("/")
+			.hasRedirectedUrl("/missions")
 			.cookies()
 			.hasValue(PlayerCookie.NAME, "token-1")
 			.isHttpOnly(PlayerCookie.NAME, true);

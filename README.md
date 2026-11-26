@@ -44,6 +44,11 @@
 | `POST /api/teams/join` | Συμμετοχή σε ομάδα (JSON `{"inviteCode": "..."}`). 404 για άκυρο κωδικό. |
 | `GET /api/teams` | Οι ομάδες του τρέχοντος παίκτη |
 | `GET /api/teams/{id}` | Ομάδα με μέλη, ή 404 για όσους δεν είναι μέλη |
+| `GET /missions` | Σελίδα «Αποστολές»: κατάλογος με την κατάσταση για την επιλεγμένη ομάδα (`?team=`), έναρξη, συνέχεια ή ατομικό παιχνίδι |
+| `GET /playthroughs/{id}` | Σελίδα της αποστολής σε εξέλιξη: τίτλος, ομάδα, χρόνος έναρξης, διαδρομές. Μόνο για τα μέλη της ομάδας. |
+| `GET /api/missions` | Οι αποστολές. Με `?teamId=` και η κατάσταση (`NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`) για την ομάδα. |
+| `POST /api/playthroughs` | Έναρξη αποστολής (JSON `{"missionId": "...", "teamId": 1}` ή `{"missionId": "...", "solo": true}`). 201 για νέο, 200 αν η ομάδα έχει ήδη ενεργό, 403 αν δεν είσαι ο δημιουργός. |
+| `GET /api/playthroughs/{id}` | Ένα playthrough, ή 403 για όσους δεν είναι μέλη της ομάδας |
 | `GET /api/hello?name=...` | Δοκιμαστικό endpoint του skeleton |
 | `GET /swagger-ui.html` | Τεκμηρίωση του REST API (Swagger UI) |
 | `GET /v3/api-docs` | Η περιγραφή OpenAPI του `/api/**` σε JSON |

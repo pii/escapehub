@@ -38,7 +38,7 @@ git push -u origin feature/12-team-invite-code
 - Μέσα σε κάθε module: `web` (controllers) → `application` (services, transactions) → `domain` → `infrastructure` (repositories, HTTP clients).
 - Το `game.domain` είναι καθαρή Java, χωρίς εξαρτήσεις από το Spring.
 - Ένα module χρησιμοποιεί άλλο module μόνο μέσω των public κλάσεών του, ποτέ μέσω των repositories ή των πινάκων του.
-- Τα σφάλματα δηλώνονται με τις εξαιρέσεις του `common`: `BadRequestException` (400), `UnauthenticatedException` (401), `NotFoundException` (404), `ConflictException` (409). Στους REST controllers το `GlobalExceptionHandler` τις μετατρέπει σε `ProblemDetail`. Τα λάθη του Bean Validation (`@Valid`) δίνουν 400 με τα πεδία στο `errors`.
+- Τα σφάλματα δηλώνονται με τις εξαιρέσεις του `common`: `BadRequestException` (400), `UnauthenticatedException` (401), `ForbiddenException` (403), `NotFoundException` (404), `ConflictException` (409). Στους REST controllers το `GlobalExceptionHandler` τις μετατρέπει σε `ProblemDetail`. Τα λάθη του Bean Validation (`@Valid`) δίνουν 400 με τα πεδία στο `errors`.
 - Ένας controller παίρνει τον τρέχοντα παίκτη με παράμετρο `@CurrentPlayer PlayerId player`. Χωρίς αναγνωρισμένο παίκτη, οι σελίδες ανακατευθύνουν στο `/player` και το `/api/**` απαντά 401.
 
 ### Public API των modules
@@ -50,6 +50,7 @@ git push -u origin feature/12-team-invite-code
 | `user` | `PlayerService` | `findName(PlayerId)` για εμφάνιση ονόματος. Τον τρέχοντα παίκτη τον δίνει το `@CurrentPlayer PlayerId`. |
 | `team` | `TeamService` | `teamsOf(PlayerId)`, `isMember(TeamId, PlayerId)`, `isCreator(TeamId, PlayerId)`, `details(TeamId, PlayerId)`, `create(PlayerId, name)` |
 | `mission` | `MissionCatalog` | `all()`, `find(id)`, `get(id)`. Το `Mission` περιέχει και τις σωστές απαντήσεις: δεν τις διαβάζουμε ποτέ σε template ή DTO ([μορφή αρχείου](docs/mission-format.md)). |
+| `game` | `PlaythroughService` | `details(PlayerId, PlaythroughId)`: το playthrough με ομάδα και αποστολή, ή 403 για όσους δεν είναι μέλη. Επίσης `catalog(...)`, `start(...)`, `startSolo(...)`. |
 
 ### Σελίδες (Thymeleaf)
 
