@@ -45,6 +45,16 @@ class ProblemDetailTests {
 	}
 
 	@Test
+	void forbiddenIs403ProblemDetail() {
+		assertThat(mvc.get().uri("/test/problems/forbidden"))
+			.hasStatus(HttpStatus.FORBIDDEN)
+			.hasContentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON)
+			.bodyJson()
+			.extractingPath("$.detail")
+			.isEqualTo("Μόνο ο δημιουργός ξεκινά αποστολές.");
+	}
+
+	@Test
 	void invalidBodyIs400WithFieldErrors() {
 		assertThat(mvc.post().uri("/test/problems/validated")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -67,6 +77,11 @@ class ProblemDetailTests {
 		@GetMapping("/test/problems/conflict")
 		String conflict() {
 			throw new ConflictException("Ο γρίφος είναι κλειδωμένος.");
+		}
+
+		@GetMapping("/test/problems/forbidden")
+		String forbidden() {
+			throw new ForbiddenException("Μόνο ο δημιουργός ξεκινά αποστολές.");
 		}
 
 		@PostMapping("/test/problems/validated")

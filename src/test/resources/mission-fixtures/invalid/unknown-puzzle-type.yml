@@ -1,0 +1,26 @@
+# Άκυρο: ο τύπος RIDDLE δεν υπάρχει.
+id: broken
+version: 1
+title: "Άκυρη αποστολή"
+summary: "Fixture για τους ελέγχους επικύρωσης."
+minPlayers: 1
+estimatedMinutes: 5
+paths:
+  - { id: hall, title: "Διάδρομος" }
+evidence:
+  - { id: clue, path: hall, title: "Ίχνος", initial: true }
+  - { id: found, path: hall, title: "Εύρημα" }
+puzzles:
+  - id: first
+    path: hall
+    type: RIDDLE
+    title: "Πρώτος γρίφος"
+    unlockedBy: [clue]
+    answer: { accepted: ["one"] }
+    reveals: [found]
+  - id: last
+    type: TEXT_ANSWER
+    title: "Τελικός γρίφος"
+    unlockedBy: [found]
+    answer: { accepted: ["two"] }
+    completesMission: true

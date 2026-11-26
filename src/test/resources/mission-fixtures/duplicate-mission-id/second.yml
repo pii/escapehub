@@ -1,0 +1,18 @@
+# Έγκυρο αρχείο, αλλά με το ίδιο id όπως το first.yml.
+id: same-id
+version: 1
+title: "Δεύτερη αποστολή"
+summary: "Fixture για τον έλεγχο του διπλού id αποστολής."
+minPlayers: 1
+estimatedMinutes: 5
+paths:
+  - { id: hall, title: "Διάδρομος" }
+evidence:
+  - { id: clue, path: hall, title: "Ίχνος", initial: true }
+puzzles:
+  - id: last
+    type: TEXT_ANSWER
+    title: "Τελικός γρίφος"
+    unlockedBy: [clue]
+    answer: { accepted: ["one"] }
+    completesMission: true
