@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Αρχική')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main class="container">
+	<div th:replace="~{fragments/layout :: messages}"></div>
+
+	<h1>EscapeHub</h1>
+	<p class="lead">Συνεργατικές αποστολές μυστηρίου με ανοιχτά δεδομένα.</p>
+	<p th:if="${currentPlayerName}">
+		Παίζεις ως <strong th:text="${currentPlayerName}">όνομα παίκτη</strong>.
+	</p>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
