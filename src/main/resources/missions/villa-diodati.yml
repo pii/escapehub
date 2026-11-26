@@ -1,0 +1,126 @@
+# Αποστολή για την ανάπτυξη και τις επιδείξεις (#26, AC4).
+#
+# Βασίζεται στο ενδεικτικό σενάριο της Ενότητας 2.1 της εκφώνησης και στο παράδειγμα του ADR-0001. Το περίγραμμα
+# της αποστολής (docs/mission-outline.md, #17) δεν έχει συμπληρωθεί ακόμη. Όταν εγκριθεί, το αρχείο ακολουθεί το
+# εγκεκριμένο θέμα και το version αυξάνεται.
+#
+# Οι απαντήσεις των γρίφων με εξωτερικά δεδομένα ταιριάζουν με τις κλήσεις του docs/api-research.md: Villa Diodati
+# (Q670519) στο Cologny, Frankenstein; or, The Modern Prometheus με first_publish_year 1818. Τα αρχεία των
+# snapshots δεν υπάρχουν ακόμη (TS-09).
+#
+# Η μορφή του αρχείου περιγράφεται στο docs/mission-format.md.
+
+id: villa-diodati
+version: 1
+title: "Το μυστήριο της Villa Diodati"
+summary: "Ένα κλειδωμένο αρχείο του 1816 και τρία αντικείμενα: μια επιστολή, ένα πορτρέτο και ένα βιβλίο."
+minPlayers: 2
+estimatedMinutes: 45
+
+paths:
+  - id: letter
+    title: "Η επιστολή"
+  - id: portrait
+    title: "Το πορτρέτο"
+  - id: book
+    title: "Το βιβλίο"
+
+evidence:
+  # Διαθέσιμα από την αρχή: ένα αντικείμενο σε κάθε διαδρομή.
+  - id: sealed-letter
+    path: letter
+    title: "Σφραγισμένη επιστολή με ξεθωριασμένο μελάνι"
+    initial: true
+  - id: portrait-back
+    path: portrait
+    title: "Σκισμένη επιγραφή στο πίσω μέρος του πορτρέτου"
+    initial: true
+  - id: book-spine
+    path: book
+    title: "Φθαρμένο βιβλίο: στη ράχη διαβάζεται μόνο «The Modern Prometheus»"
+    initial: true
+
+  # Τα αποκαλύπτουν οι γρίφοι.
+  - id: letter-1816
+    path: letter
+    title: "Επιστολή, Ιούνιος 1816: «συνάντηση στη Villa Diodati»"
+  - id: meeting-place
+    path: letter
+    title: "Τόπος συνάντησης: Villa Diodati, Cologny"
+  - id: sitter
+    path: portrait
+    title: "Πρόσωπο του πορτρέτου: Mary Shelley"
+  - id: book-identity
+    path: book
+    title: "Βιβλίο: Frankenstein (1818)"
+
+puzzles:
+  - id: restore-letter
+    path: letter
+    type: SEQUENCE
+    title: "Αποκατάσταση της επιστολής"
+    prompt: "Το μελάνι έχει σχεδόν σβήσει. Με ποια σειρά θα χρησιμοποιήσετε τα εργαλεία;"
+    unlockedBy: [sealed-letter]
+    # Η σειρά εδώ δεν είναι η σωστή. Η σωστή είναι στο answer.steps.
+    actions:
+      - id: seal
+        title: "Αφαίρεση της σφραγίδας"
+      - id: postscript
+        title: "Ανάγνωση του υστερόγραφου"
+      - id: uv-lamp
+        title: "Λάμπα UV"
+    answer:
+      steps: [uv-lamp, seal, postscript]
+    reveals: [letter-1816]
+
+  - id: meeting-location
+    path: letter
+    type: TEXT_ANSWER
+    title: "Ο τόπος της συνάντησης"
+    prompt: "Η επιστολή ορίζει συνάντηση στη Villa Diodati. Σε ποιον δήμο της Ελβετίας βρίσκεται η βίλα;"
+    unlockedBy: [letter-1816]
+    source: { provider: wikidata, snapshot: wikidata/search-villa-diodati.json }
+    answer:
+      accepted: ["Cologny", "Κολονί"]
+    reveals: [meeting-place]
+
+  - id: portrait-sitter
+    path: portrait
+    type: COOPERATIVE
+    title: "Η κυρία του πορτρέτου"
+    prompt: "Η επιγραφή έχει σκιστεί στα δύο. Δύο διαφορετικοί παίκτες πρέπει να δώσουν το όνομα της γυναίκας του πορτρέτου."
+    unlockedBy: [portrait-back]
+    contributors: 2
+    answer:
+      accepted: ["Mary Shelley", "Mary Wollstonecraft Shelley", "Μαίρη Σέλεϊ"]
+    reveals: [sitter]
+
+  - id: book-title
+    path: book
+    type: TEXT_ANSWER
+    title: "Ο τίτλος του βιβλίου"
+    prompt: "Ποιο βιβλίο έχει τον υπότιτλο «The Modern Prometheus»;"
+    unlockedBy: [book-spine]
+    source: { provider: openlibrary, snapshot: openlibrary/search-modern-prometheus.json }
+    answer:
+      accepted: ["Frankenstein", "Φρανκενστάιν"]
+    reveals: [book-identity]
+
+  - id: archive-1816
+    type: COMBINATION
+    title: "Το αρχείο του 1816"
+    prompt: "Το αρχείο ανοίγει με τον τόπο της συνάντησης, το πρόσωπο του πορτρέτου και το έτος πρώτης έκδοσης του βιβλίου."
+    unlockedBy: [meeting-place, sitter, book-identity]
+    fields:
+      - id: place
+        title: "Τόπος"
+      - id: person
+        title: "Πρόσωπο"
+      - id: year
+        title: "Έτος"
+    answer:
+      values:
+        place: ["Cologny", "Κολονί"]
+        person: ["Mary Shelley", "Mary Wollstonecraft Shelley", "Μαίρη Σέλεϊ"]
+        year: ["1818"]
+    completesMission: true

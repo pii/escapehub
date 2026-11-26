@@ -75,11 +75,11 @@ flowchart LR
 - **Docker:** multi-stage `Dockerfile`, με build σε JDK 25 και εκτέλεση σε JRE 25. Το `compose.yaml` τρέχει μια έκδοση από το image με συγκεκριμένο tag, μαζί με PostgreSQL. Το `compose.dev.yaml` έχει μόνο την PostgreSQL για την τοπική ανάπτυξη, και το `spring-boot:run` το ξεκινά αυτόματα.
 - **Στατική ανάλυση:** Checkstyle και SpotBugs ως μέρος του `verify`. Σε αποτυχία, το build σταματά.
 
-## 5. Frontend (ανοιχτή απόφαση)
+## 5. Frontend
 
 | Επιλογή | Υπέρ | Κατά |
 |---------|------|------|
 | **Thymeleaf** (server-side rendering), προαιρετικά με htmx | Ένα project, ένα build, ένα image. Απλή αναγνώριση παίκτη με cookie. Όλη η ομάδα γράφει Java. | Λιγότερο «σύγχρονο» UI |
 | SPA (π.χ. React + Vite) | Πλούσιο UI, καθαρός διαχωρισμός | Δεύτερο build και toolchain, CORS/tokens, περισσότεροι έλεγχοι |
 
-**Πρόταση:** Thymeleaf, για να μείνει ο χρόνος στη μηχανική λογισμικού. Το REST API υπάρχει ούτως ή άλλως, για τους ελέγχους και το OpenAPI. Χρειάζεται συνεννόηση με τον διδάσκοντα (Ενότητα 5) και ADR.
+**Απόφαση:** Thymeleaf ([ADR-0003](adr/0003-frontend-thymeleaf.md)), για να μείνει ο χρόνος στη μηχανική λογισμικού. Οι σελίδες (`@Controller`) και το REST API (`@RestController`, `/api/**`) καλούν τα ίδια services. Το REST API υπάρχει για τους ελέγχους και το OpenAPI.

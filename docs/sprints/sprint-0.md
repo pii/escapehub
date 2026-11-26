@@ -50,7 +50,7 @@
 
 ## Ερωτήματα προς τον Product Owner
 
-1. Εγκρίνεται το Thymeleaf για το frontend ([αρχιτεκτονική, §5](../architecture.md#5-frontend-ανοιχτή-απόφαση));
+1. Εγκρίνεται το Thymeleaf για το frontend ([αρχιτεκτονική, §5](../architecture.md#5-frontend));
 2. Αρκούν δύο πηγές (Wikidata, Open Library) για το MVP;
 
 ## Αποφάσεις του Product Owner

@@ -1,0 +1,34 @@
+# Άκυρο: ο first περιμένει στοιχείο του second, και ο second στοιχείο του first.
+id: broken
+version: 1
+title: "Άκυρη αποστολή"
+summary: "Fixture για τους ελέγχους επικύρωσης."
+minPlayers: 1
+estimatedMinutes: 5
+paths:
+  - { id: hall, title: "Διάδρομος" }
+evidence:
+  - { id: clue, path: hall, title: "Ίχνος", initial: true }
+  - { id: first-out, path: hall, title: "Εύρημα του πρώτου" }
+  - { id: second-out, path: hall, title: "Εύρημα του δεύτερου" }
+puzzles:
+  - id: first
+    path: hall
+    type: TEXT_ANSWER
+    title: "Πρώτος γρίφος"
+    unlockedBy: [clue, second-out]
+    answer: { accepted: ["one"] }
+    reveals: [first-out]
+  - id: second
+    path: hall
+    type: TEXT_ANSWER
+    title: "Δεύτερος γρίφος"
+    unlockedBy: [first-out]
+    answer: { accepted: ["two"] }
+    reveals: [second-out]
+  - id: last
+    type: TEXT_ANSWER
+    title: "Τελικός γρίφος"
+    unlockedBy: [second-out]
+    answer: { accepted: ["three"] }
+    completesMission: true

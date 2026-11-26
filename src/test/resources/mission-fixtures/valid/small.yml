@@ -1,0 +1,61 @@
+# Μικρή έγκυρη αποστολή για τους ελέγχους: δύο διαδρομές και ένας γρίφος από κάθε τύπο.
+# Οι απαντήσεις (secret-word, 4711) δεν εμφανίζονται πουθενά αλλού στο αρχείο, ώστε ο έλεγχος του AC3 να τις βρίσκει
+# μόνο αν διαρρεύσουν.
+id: small-test
+version: 3
+title: "Μικρή αποστολή ελέγχων"
+summary: "Δύο διαδρομές και τέσσερις γρίφοι, ένας από κάθε τύπο."
+minPlayers: 2
+estimatedMinutes: 10
+
+paths:
+  - { id: north, title: "Βόρεια" }
+  - { id: south, title: "Νότια" }
+
+evidence:
+  - { id: note, path: north, title: "Σημείωμα", initial: true }
+  - { id: key, path: north, title: "Κλειδί" }
+  - { id: map, path: south, title: "Χάρτης" }
+  - { id: code, path: south, title: "Κωδικός" }
+
+puzzles:
+  - id: read-note
+    path: north
+    type: TEXT_ANSWER
+    title: "Το σημείωμα"
+    prompt: "Ποια λέξη λείπει από το σημείωμα;"
+    unlockedBy: [note]
+    source: { provider: wikidata, snapshot: wikidata/test.json }
+    answer: { accepted: ["secret-word"] }
+    reveals: [key]
+
+  # Χωρίς unlockedBy: ανοιχτός από την αρχή.
+  - id: open-box
+    path: south
+    type: SEQUENCE
+    title: "Το κουτί"
+    actions:
+      - { id: left, title: "Αριστερά" }
+      - { id: right, title: "Δεξιά" }
+    answer: { steps: [right, left, right] }
+    reveals: [map]
+
+  - id: decode
+    path: south
+    type: COOPERATIVE
+    title: "Ο κωδικός"
+    contributors: 2
+    unlockedBy: [map]
+    answer: { accepted: ["4711"] }
+    reveals: [code]
+
+  - id: final-door
+    type: COMBINATION
+    title: "Η πόρτα"
+    unlockedBy: [key, code]
+    fields:
+      - { id: word, title: "Λέξη" }
+    answer:
+      evidence: [key, code]
+      values: { word: ["secret-word"] }
+    completesMission: true

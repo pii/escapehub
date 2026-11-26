@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Η σελίδα δεν βρέθηκε')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main class="container narrow">
+	<h1>Η σελίδα δεν βρέθηκε</h1>
+	<p>Ο σύνδεσμος μπορεί να είναι λάθος ή η σελίδα να μην υπάρχει πια.</p>
+	<p><a th:href="@{/}">Επιστροφή στην αρχική</a></p>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
