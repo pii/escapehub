@@ -72,7 +72,7 @@ flowchart LR
 ```
 
 - **Workflows:** `.github/workflows/ci.yml` για PR και `main`, `.github/workflows/release.yml` για tags `v*`.
-- **Docker:** multi-stage `Dockerfile`, με build σε JDK 25 και εκτέλεση σε JRE 25. Το `compose.yaml` τρέχει μια έκδοση μόνο από το image με συγκεκριμένο tag. Η PostgreSQL προστίθεται στο Sprint 1 (TS-05).
+- **Docker:** multi-stage `Dockerfile`, με build σε JDK 25 και εκτέλεση σε JRE 25. Το `compose.yaml` τρέχει μια έκδοση από το image με συγκεκριμένο tag, μαζί με PostgreSQL. Το `compose.dev.yaml` έχει μόνο την PostgreSQL για την τοπική ανάπτυξη, και το `spring-boot:run` το ξεκινά αυτόματα.
 - **Στατική ανάλυση:** Checkstyle και SpotBugs ως μέρος του `verify`. Σε αποτυχία, το build σταματά.
 
 ## 5. Frontend (ανοιχτή απόφαση)
