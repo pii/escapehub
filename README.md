@@ -34,7 +34,24 @@
 
 | Endpoint | Περιγραφή |
 |----------|-----------|
+| `GET /` | Αρχική σελίδα. Χωρίς όνομα παίκτη ανακατευθύνει στο `/player`. |
+| `GET`, `POST /player` | Σελίδα όπου ο παίκτης δίνει μοναδικό όνομα |
+| `POST /api/players` | Δημιουργία παίκτη (JSON `{"name": "..."}`). Στέλνει το cookie που τον αναγνωρίζει. |
+| `GET /api/players/me` | Ο τρέχων παίκτης, ή 401 |
+| `GET /teams` | Σελίδα «Οι ομάδες μου»: λίστα ομάδων, δημιουργία ομάδας, συμμετοχή με κωδικό πρόσκλησης |
+| `GET /teams/{id}` | Σελίδα ομάδας με κωδικό πρόσκλησης και μέλη. Τη βλέπουν μόνο τα μέλη. |
+| `POST /api/teams` | Δημιουργία ομάδας (JSON `{"name": "..."}`), με τον τρέχοντα παίκτη ως δημιουργό |
+| `POST /api/teams/join` | Συμμετοχή σε ομάδα (JSON `{"inviteCode": "..."}`). 404 για άκυρο κωδικό. |
+| `GET /api/teams` | Οι ομάδες του τρέχοντος παίκτη |
+| `GET /api/teams/{id}` | Ομάδα με μέλη, ή 404 για όσους δεν είναι μέλη |
+| `GET /missions` | Σελίδα «Αποστολές»: κατάλογος με την κατάσταση για την επιλεγμένη ομάδα (`?team=`), έναρξη, συνέχεια ή ατομικό παιχνίδι |
+| `GET /playthroughs/{id}` | Σελίδα της αποστολής σε εξέλιξη: τίτλος, ομάδα, χρόνος έναρξης, διαδρομές. Μόνο για τα μέλη της ομάδας. |
+| `GET /api/missions` | Οι αποστολές. Με `?teamId=` και η κατάσταση (`NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`) για την ομάδα. |
+| `POST /api/playthroughs` | Έναρξη αποστολής (JSON `{"missionId": "...", "teamId": 1}` ή `{"missionId": "...", "solo": true}`). 201 για νέο, 200 αν η ομάδα έχει ήδη ενεργό, 403 αν δεν είσαι ο δημιουργός. |
+| `GET /api/playthroughs/{id}` | Ένα playthrough, ή 403 για όσους δεν είναι μέλη της ομάδας |
 | `GET /api/hello?name=...` | Δοκιμαστικό endpoint του skeleton |
+| `GET /swagger-ui.html` | Τεκμηρίωση του REST API (Swagger UI) |
+| `GET /v3/api-docs` | Η περιγραφή OpenAPI του `/api/**` σε JSON |
 | `GET /actuator/health` | Κατάσταση της εφαρμογής |
 | `GET /actuator/info` | Έκδοση (`build.version`) και commit (`git.commit.id`) της εφαρμογής |
 
@@ -71,6 +88,7 @@ ESCAPEHUB_VERSION=local docker compose up
 | [Αναφορά APIs](docs/api-research.md) | Wikidata και Open Library: δυνατότητες, όρια, μορφή αποκρίσεων |
 | [Αρχιτεκτονική](docs/architecture.md) | Modules, μοντέλο δεδομένων, ροές, έλεγχοι, CI/CD |
 | [ADRs](docs/adr/README.md) | Καταγραφή τεχνικών αποφάσεων |
+| [Μορφή αρχείου αποστολής](docs/mission-format.md) | Πώς περιγράφεται μια αποστολή σε YAML και τι ελέγχεται στην εκκίνηση |
 | [AI-usage log](docs/ai-usage-log.md) | Χρήση εργαλείων AI ανά sprint |
 | [Sprint 0](docs/sprints/sprint-0.md) | Στόχος, παραδοτέα, review, retrospective |
 | [Οδηγός συνεισφοράς](CONTRIBUTING.md) | Git workflow, pull requests, reviews, εκδόσεις |
