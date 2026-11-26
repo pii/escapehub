@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${team.name()})}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main class="container">
+	<p><a th:href="@{/teams}">← Οι ομάδες μου</a></p>
+	<h1 th:text="${team.name()}">Όνομα ομάδας</h1>
+
+	<div th:replace="~{fragments/layout :: messages}"></div>
+
+	<div class="card">
+		<span class="hint">Κωδικός πρόσκλησης</span>
+		<code class="invite-code" th:text="${team.inviteCode()}">ABCD2345</code>
+		<span class="hint">Δώσε τον στους συμπαίκτες σου για να μπουν στην ομάδα.</span>
+	</div>
+
+	<h2>Μέλη</h2>
+	<table class="table">
+		<thead>
+		<tr>
+			<th>Παίκτης</th>
+			<th>Ρόλος</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="member : ${team.members()}">
+			<td th:text="${member.name()}">Όνομα παίκτη</td>
+			<td th:text="${member.role().label()}">Ρόλος</td>
+		</tr>
+		</tbody>
+	</table>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Οι ομάδες μου')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main class="container">
+	<h1>Οι ομάδες μου</h1>
+
+	<div th:replace="~{fragments/layout :: messages}"></div>
+
+	<p th:if="${#lists.isEmpty(teams)}">Δεν ανήκεις ακόμη σε ομάδα. Δημιούργησε μία ή μπες σε μια ομάδα με κωδικό.</p>
+
+	<table class="table" th:unless="${#lists.isEmpty(teams)}">
+		<thead>
+		<tr>
+			<th>Ομάδα</th>
+			<th>Ρόλος</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="team : ${teams}">
+			<td><a th:href="@{/teams/{id}(id=${team.id().value()})}" th:text="${team.name()}">Όνομα ομάδας</a></td>
+			<td th:text="${team.role().label()}">Ρόλος</td>
+		</tr>
+		</tbody>
+	</table>
+
+	<div class="cards">
+		<form class="card" method="post" th:action="@{/teams}">
+			<h2>Νέα ομάδα</h2>
+			<label for="name">Όνομα ομάδας</label>
+			<input id="name" name="name" type="text" required maxlength="40">
+			<p class="hint">Θα γίνεις ο δημιουργός της ομάδας.</p>
+			<button type="submit">Δημιουργία</button>
+		</form>
+
+		<form class="card" method="post" th:action="@{/teams/join}">
+			<h2>Μπες σε ομάδα</h2>
+			<label for="inviteCode">Κωδικός πρόσκλησης</label>
+			<input id="inviteCode" name="inviteCode" type="text" required maxlength="8" autocomplete="off"
+				   class="code-input">
+			<p class="hint">Τον κωδικό σού τον δίνει ένα μέλος της ομάδας.</p>
+			<button type="submit">Συμμετοχή</button>
+		</form>
+	</div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
