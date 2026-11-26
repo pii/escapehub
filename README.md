@@ -45,6 +45,8 @@
 | `GET /api/teams` | Οι ομάδες του τρέχοντος παίκτη |
 | `GET /api/teams/{id}` | Ομάδα με μέλη, ή 404 για όσους δεν είναι μέλη |
 | `GET /api/hello?name=...` | Δοκιμαστικό endpoint του skeleton |
+| `GET /swagger-ui.html` | Τεκμηρίωση του REST API (Swagger UI) |
+| `GET /v3/api-docs` | Η περιγραφή OpenAPI του `/api/**` σε JSON |
 | `GET /actuator/health` | Κατάσταση της εφαρμογής |
 | `GET /actuator/info` | Έκδοση (`build.version`) και commit (`git.commit.id`) της εφαρμογής |
 
@@ -81,6 +83,7 @@ ESCAPEHUB_VERSION=local docker compose up
 | [Αναφορά APIs](docs/api-research.md) | Wikidata και Open Library: δυνατότητες, όρια, μορφή αποκρίσεων |
 | [Αρχιτεκτονική](docs/architecture.md) | Modules, μοντέλο δεδομένων, ροές, έλεγχοι, CI/CD |
 | [ADRs](docs/adr/README.md) | Καταγραφή τεχνικών αποφάσεων |
+| [Μορφή αρχείου αποστολής](docs/mission-format.md) | Πώς περιγράφεται μια αποστολή σε YAML και τι ελέγχεται στην εκκίνηση |
 | [AI-usage log](docs/ai-usage-log.md) | Χρήση εργαλείων AI ανά sprint |
 | [Sprint 0](docs/sprints/sprint-0.md) | Στόχος, παραδοτέα, review, retrospective |
 | [Οδηγός συνεισφοράς](CONTRIBUTING.md) | Git workflow, pull requests, reviews, εκδόσεις |

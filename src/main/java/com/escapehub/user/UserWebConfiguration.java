@@ -35,7 +35,8 @@ class UserWebConfiguration implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new PlayerPageInterceptor(providers, playerService))
-			.excludePathPatterns(PlayerPageInterceptor.NAME_PAGE, "/error", "/api/**", "/actuator/**");
+			.excludePathPatterns(PlayerPageInterceptor.NAME_PAGE, "/error", "/api/**", "/actuator/**",
+					"/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**");
 	}
 
 }
