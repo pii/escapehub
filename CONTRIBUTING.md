@@ -38,8 +38,18 @@ git push -u origin feature/12-team-invite-code
 - Μέσα σε κάθε module: `web` (controllers) → `application` (services, transactions) → `domain` → `infrastructure` (repositories, HTTP clients).
 - Το `game.domain` είναι καθαρή Java, χωρίς εξαρτήσεις από το Spring.
 - Ένα module χρησιμοποιεί άλλο module μόνο μέσω των public κλάσεών του, ποτέ μέσω των repositories ή των πινάκων του.
-- Τα σφάλματα του API δηλώνονται με τις εξαιρέσεις του `common`: `NotFoundException` (404), `ConflictException` (409), `UnauthenticatedException` (401). Το `GlobalExceptionHandler` τις μετατρέπει σε `ProblemDetail`. Τα λάθη του Bean Validation (`@Valid`) δίνουν 400 με τα πεδία στο `errors`.
-- Ένας controller παίρνει τον τρέχοντα παίκτη με παράμετρο `@CurrentPlayer PlayerId player`. Χωρίς αναγνωρισμένο παίκτη η απάντηση είναι 401.
+- Τα σφάλματα δηλώνονται με τις εξαιρέσεις του `common`: `BadRequestException` (400), `UnauthenticatedException` (401), `NotFoundException` (404), `ConflictException` (409). Στους REST controllers το `GlobalExceptionHandler` τις μετατρέπει σε `ProblemDetail`. Τα λάθη του Bean Validation (`@Valid`) δίνουν 400 με τα πεδία στο `errors`.
+- Ένας controller παίρνει τον τρέχοντα παίκτη με παράμετρο `@CurrentPlayer PlayerId player`. Χωρίς αναγνωρισμένο παίκτη, οι σελίδες ανακατευθύνουν στο `/player` και το `/api/**` απαντά 401.
+
+### Σελίδες (Thymeleaf)
+
+Βλ. [ADR-0003](docs/adr/0003-frontend-thymeleaf.md).
+
+- Κάθε ενέργεια έχει σελίδα (`@Controller`) και REST endpoint (`@RestController`, `/api/**`), που καλούν το ίδιο service.
+- Τα templates μπαίνουν στο `src/main/resources/templates/<module>/` και χρησιμοποιούν τα fragments του `templates/fragments/layout.html`: `head('Τίτλος')`, `header`, `messages`, `footer`. Παράδειγμα: `templates/player/name.html`.
+- Κάθε νέα σελίδα προσθέτει τον σύνδεσμό της στο μενού (`<nav>`) του `header` στο layout.
+- Τα αναμενόμενα σφάλματα (π.χ. όνομα που υπάρχει ήδη) τα πιάνει ο controller της σελίδας και τα δείχνει στη φόρμα με το attribute `error`. Μετά από επιτυχία: `redirect:` με flash attribute `message`.
+- Οι σελίδες δεν επιστρέφουν ποτέ JSON. Τα μη αναμενόμενα σφάλματα δείχνουν τις σελίδες του `templates/error/`.
 
 ### Έλεγχοι
 
@@ -47,6 +57,7 @@ git push -u origin feature/12-team-invite-code
 |-----------|-----|
 | Domain λογική | Απλό JUnit test, χωρίς Spring |
 | Controller | `@WebMvcTest(MyController.class)`. Για τρέχοντα παίκτη: `@Import(TestPlayerConfiguration.class)` και `.header(TestPlayerConfiguration.HEADER, "7")` |
+| Σελίδα (Thymeleaf) | `@WebMvcTest(MyPageController.class)` με `.hasViewName(...)` και `.bodyText().contains(...)`. Χωρίς παίκτη η σελίδα δίνει redirect στο `/player`. |
 | Ολόκληρη ροή με βάση | `@IntegrationTest` (Spring context, PostgreSQL με Testcontainers, `MockMvcTester`). Χρειάζεται Docker. |
 
 ## Migrations βάσης δεδομένων

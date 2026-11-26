@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Σφάλμα')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main class="container narrow">
+	<h1>Κάτι πήγε στραβά</h1>
+	<p>Παρουσιάστηκε απρόσμενο σφάλμα. Δοκίμασε ξανά σε λίγο.</p>
+	<p><a th:href="@{/}">Επιστροφή στην αρχική</a></p>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

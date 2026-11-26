@@ -6,6 +6,7 @@
 |---|--------|-----------|
 | [0001](0001-mission-description-model.md) | Μοντέλο περιγραφής αποστολών | Προτεινόμενη |
 | [0002](0002-external-data-snapshots.md) | Στρατηγική snapshots εξωτερικών δεδομένων | Προτεινόμενη |
+| [0003](0003-frontend-thymeleaf.md) | Frontend με Thymeleaf | Αποδεκτή |
 
 ## Κανόνες
 

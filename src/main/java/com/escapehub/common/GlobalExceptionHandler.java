@@ -11,14 +11,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
- * Ενιαίος χειρισμός σφαλμάτων για όλο το API. Κάθε σφάλμα επιστρέφεται ως {@link ProblemDetail} (RFC 9457).
+ * Ενιαίος χειρισμός σφαλμάτων για το REST API. Κάθε σφάλμα επιστρέφεται ως {@link ProblemDetail} (RFC 9457).
+ *
+ * <p>Ισχύει μόνο για {@code @RestController}. Οι σελίδες του UI ({@code @Controller}) δεν παίρνουν ποτέ JSON:
+ * οι εξαιρέσεις τους δίνουν τη σελίδα σφάλματος του {@code templates/error/}, με τον κωδικό από το
+ * {@code @ResponseStatus} της εξαίρεσης.
  */
-@RestControllerAdvice
+@RestControllerAdvice(annotations = RestController.class)
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(NotFoundException.class)
@@ -29,6 +34,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(ConflictException.class)
 	ProblemDetail handleConflict(ConflictException ex) {
 		return problem(HttpStatus.CONFLICT, "Η ενέργεια δεν επιτρέπεται", ex.getMessage());
+	}
+
+	@ExceptionHandler(BadRequestException.class)
+	ProblemDetail handleBadRequest(BadRequestException ex) {
+		return problem(HttpStatus.BAD_REQUEST, "Μη έγκυρα δεδομένα", ex.getMessage());
 	}
 
 	@ExceptionHandler(UnauthenticatedException.class)

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+  Κοινά κομμάτια όλων των σελίδων. Χρήση σε μια σελίδα:
+    <head th:replace="~{fragments/layout :: head('Τίτλος')}"></head>
+    <header th:replace="~{fragments/layout :: header}"></header>
+    <div th:replace="~{fragments/layout :: messages}"></div>
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+-->
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title th:text="|${title} · EscapeHub|">EscapeHub</title>
+	<link rel="stylesheet" th:href="@{/css/escapehub.css}">
+</head>
+<body>
+
+<header th:fragment="header" class="site-header">
+	<a class="brand" th:href="@{/}">EscapeHub</a>
+	<nav class="site-nav">
+		<a th:href="@{/}">Αρχική</a>
+		<!-- Κάθε story προσθέτει εδώ τον σύνδεσμο της σελίδας της, π.χ. «Οι ομάδες μου» (#25), «Αποστολές» (#27). -->
+	</nav>
+	<span class="player" th:if="${currentPlayerName}" th:text="${currentPlayerName}">όνομα παίκτη</span>
+</header>
+
+<div th:fragment="messages" class="messages">
+	<p class="message" th:if="${message}" th:text="${message}">Μήνυμα επιτυχίας</p>
+	<p class="error" th:if="${error}" th:text="${error}">Μήνυμα σφάλματος</p>
+</div>
+
+<footer th:fragment="footer" class="site-footer">
+	EscapeHub · Εργαστήριο Τεχνολογίας Λογισμικού 2026–2027
+</footer>
+
+</body>
+</html>

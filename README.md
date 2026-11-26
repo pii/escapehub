@@ -34,6 +34,10 @@
 
 | Endpoint | Περιγραφή |
 |----------|-----------|
+| `GET /` | Αρχική σελίδα. Χωρίς όνομα παίκτη ανακατευθύνει στο `/player`. |
+| `GET`, `POST /player` | Σελίδα όπου ο παίκτης δίνει μοναδικό όνομα |
+| `POST /api/players` | Δημιουργία παίκτη (JSON `{"name": "..."}`). Στέλνει το cookie που τον αναγνωρίζει. |
+| `GET /api/players/me` | Ο τρέχων παίκτης, ή 401 |
 | `GET /api/hello?name=...` | Δοκιμαστικό endpoint του skeleton |
 | `GET /actuator/health` | Κατάσταση της εφαρμογής |
 | `GET /actuator/info` | Έκδοση (`build.version`) και commit (`git.commit.id`) της εφαρμογής |

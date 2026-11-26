@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Όνομα παίκτη')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main class="container narrow">
+	<h1>Ποιο είναι το όνομά σου;</h1>
+	<p>Δεν χρειάζεται εγγραφή ούτε κωδικός. Το όνομα είναι μοναδικό και το βλέπουν οι συμπαίκτες σου.</p>
+
+	<div th:replace="~{fragments/layout :: messages}"></div>
+
+	<form class="card" method="post" th:action="@{/player}">
+		<label for="name">Όνομα παίκτη</label>
+		<input id="name" name="name" type="text" th:value="${form.name()}"
+			   required minlength="3" maxlength="20" autocomplete="nickname" autofocus>
+		<p class="hint">3–20 χαρακτήρες: γράμματα, ψηφία, _ ή -</p>
+		<button type="submit">Συνέχεια</button>
+	</form>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

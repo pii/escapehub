@@ -1,0 +1,142 @@
+/* Στυλ του EscapeHub. Απλό CSS, χωρίς build και χωρίς εξωτερικές βιβλιοθήκες. */
+
+:root {
+	--bg: #f6f5f2;
+	--surface: #ffffff;
+	--text: #1f2328;
+	--muted: #5c6370;
+	--accent: #7a3e9d;
+	--accent-dark: #5e2d7a;
+	--ok-bg: #e7f5ea;
+	--ok-text: #1d6b35;
+	--error-bg: #fdecea;
+	--error-text: #a12622;
+	--border: #dcd9d3;
+	--radius: 8px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+	line-height: 1.5;
+	color: var(--text);
+	background: var(--bg);
+}
+
+a {
+	color: var(--accent);
+}
+
+.site-header {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+	padding: 0.75rem 1.5rem;
+	background: var(--surface);
+	border-bottom: 1px solid var(--border);
+}
+
+.brand {
+	font-weight: 700;
+	font-size: 1.2rem;
+	text-decoration: none;
+}
+
+.site-nav {
+	display: flex;
+	gap: 1rem;
+	flex: 1;
+}
+
+.site-nav a {
+	text-decoration: none;
+}
+
+.player {
+	color: var(--muted);
+	font-weight: 600;
+}
+
+.container {
+	max-width: 960px;
+	margin: 2rem auto;
+	padding: 0 1.5rem;
+}
+
+.container.narrow {
+	max-width: 480px;
+}
+
+.lead {
+	font-size: 1.15rem;
+	color: var(--muted);
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 1.5rem;
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+}
+
+label {
+	font-weight: 600;
+}
+
+input[type="text"] {
+	padding: 0.6rem 0.75rem;
+	font-size: 1rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+}
+
+button {
+	padding: 0.6rem 1rem;
+	font-size: 1rem;
+	font-weight: 600;
+	color: #ffffff;
+	background: var(--accent);
+	border: none;
+	border-radius: var(--radius);
+	cursor: pointer;
+}
+
+button:hover {
+	background: var(--accent-dark);
+}
+
+.hint {
+	margin: 0;
+	font-size: 0.9rem;
+	color: var(--muted);
+}
+
+.message,
+.error {
+	padding: 0.75rem 1rem;
+	border-radius: var(--radius);
+}
+
+.message {
+	color: var(--ok-text);
+	background: var(--ok-bg);
+}
+
+.error {
+	color: var(--error-text);
+	background: var(--error-bg);
+}
+
+.site-footer {
+	padding: 2rem 1.5rem;
+	text-align: center;
+	font-size: 0.85rem;
+	color: var(--muted);
+}
