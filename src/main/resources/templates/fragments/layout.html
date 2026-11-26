@@ -19,7 +19,8 @@
 	<a class="brand" th:href="@{/}">EscapeHub</a>
 	<nav class="site-nav">
 		<a th:href="@{/}">Αρχική</a>
-		<!-- Κάθε story προσθέτει εδώ τον σύνδεσμο της σελίδας της, π.χ. «Οι ομάδες μου» (#25), «Αποστολές» (#27). -->
+		<a th:href="@{/teams}">Οι ομάδες μου</a>
+		<!-- Κάθε story προσθέτει εδώ τον σύνδεσμο της σελίδας της, π.χ. «Αποστολές» (#27). -->
 	</nav>
 	<span class="player" th:if="${currentPlayerName}" th:text="${currentPlayerName}">όνομα παίκτη</span>
 </header>

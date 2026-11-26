@@ -41,6 +41,15 @@ git push -u origin feature/12-team-invite-code
 - Τα σφάλματα δηλώνονται με τις εξαιρέσεις του `common`: `BadRequestException` (400), `UnauthenticatedException` (401), `NotFoundException` (404), `ConflictException` (409). Στους REST controllers το `GlobalExceptionHandler` τις μετατρέπει σε `ProblemDetail`. Τα λάθη του Bean Validation (`@Valid`) δίνουν 400 με τα πεδία στο `errors`.
 - Ένας controller παίρνει τον τρέχοντα παίκτη με παράμετρο `@CurrentPlayer PlayerId player`. Χωρίς αναγνωρισμένο παίκτη, οι σελίδες ανακατευθύνουν στο `/player` και το `/api/**` απαντά 401.
 
+### Public API των modules
+
+Ένα module χρησιμοποιεί άλλο module μόνο μέσω αυτών των κλάσεων:
+
+| Module | Κλάση | Τι δίνει |
+|--------|-------|----------|
+| `user` | `PlayerService` | `findName(PlayerId)` για εμφάνιση ονόματος. Τον τρέχοντα παίκτη τον δίνει το `@CurrentPlayer PlayerId`. |
+| `team` | `TeamService` | `teamsOf(PlayerId)`, `isMember(TeamId, PlayerId)`, `isCreator(TeamId, PlayerId)`, `details(TeamId, PlayerId)`, `create(PlayerId, name)` |
+
 ### Σελίδες (Thymeleaf)
 
 Βλ. [ADR-0003](docs/adr/0003-frontend-thymeleaf.md).

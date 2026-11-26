@@ -140,3 +140,48 @@ button:hover {
 	font-size: 0.85rem;
 	color: var(--muted);
 }
+
+/* Πίνακες, κάρτες δίπλα-δίπλα και κωδικοί πρόσκλησης (#25) */
+
+.table {
+	width: 100%;
+	margin: 1rem 0 2rem;
+	border-collapse: collapse;
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+}
+
+.table th,
+.table td {
+	padding: 0.6rem 0.9rem;
+	text-align: left;
+	border-bottom: 1px solid var(--border);
+}
+
+.table th {
+	font-size: 0.9rem;
+	color: var(--muted);
+}
+
+.cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 1.5rem;
+}
+
+.card h2 {
+	margin: 0 0 0.5rem;
+	font-size: 1.15rem;
+}
+
+.invite-code {
+	font-size: 1.6rem;
+	font-weight: 700;
+	letter-spacing: 0.2em;
+}
+
+.code-input {
+	text-transform: uppercase;
+	letter-spacing: 0.15em;
+}
